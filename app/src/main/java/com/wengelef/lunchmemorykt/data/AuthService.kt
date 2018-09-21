@@ -17,11 +17,13 @@
 package com.wengelef.lunchmemorykt.data
 
 import com.google.firebase.auth.FirebaseAuth
+import com.wengelef.lunchmemorykt.domain.LoginResult
 import javax.inject.Inject
 
 interface AuthService {
     fun getCurrentUser(): User?
     fun logout()
+    fun login(user: String, pass: String, resultFunc: (LoginResult) -> Unit)
 }
 
 class AuthServiceImpl @Inject constructor(private val auth: FirebaseAuth): AuthService {
@@ -32,6 +34,17 @@ class AuthServiceImpl @Inject constructor(private val auth: FirebaseAuth): AuthS
 
     override fun logout() {
         auth.signOut()
+    }
+
+    override fun login(user: String, pass: String, resultFunc: (LoginResult) -> Unit) {
+        auth.signInWithEmailAndPassword(user, pass)
+                .addOnCompleteListener { result ->
+                    if (result.isSuccessful) {
+                        resultFunc.invoke(LoginResult.Success)
+                    } else {
+                        resultFunc.invoke(LoginResult.Error)
+                    }
+                }
     }
 }
 

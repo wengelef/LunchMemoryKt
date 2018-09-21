@@ -21,6 +21,7 @@ import com.wengelef.lunchmemorykt.data.AuthService
 interface AuthInteractor {
     fun isAuthenticated(): Boolean
     fun logout()
+    fun login(user: String, pass: String, resultFunc: (LoginResult) -> Unit)
 }
 
 class AuthInteractorImpl(private val authService: AuthService) : AuthInteractor {
@@ -31,4 +32,13 @@ class AuthInteractorImpl(private val authService: AuthService) : AuthInteractor 
     override fun logout() {
         authService.logout()
     }
+
+    override fun login(user: String, pass: String, resultFunc: (LoginResult) -> Unit) {
+        authService.login(user, pass, resultFunc)
+    }
+}
+
+sealed class LoginResult {
+    object Success : LoginResult()
+    object Error : LoginResult()
 }

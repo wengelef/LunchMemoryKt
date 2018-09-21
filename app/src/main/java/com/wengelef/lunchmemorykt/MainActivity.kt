@@ -2,6 +2,7 @@ package com.wengelef.lunchmemorykt
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.wengelef.lunchmemorykt.di.DaggerLunchComponent
 import com.wengelef.lunchmemorykt.di.LunchComponent
 
@@ -16,6 +17,10 @@ class MainActivity : AppCompatActivity(), Injector<LunchComponent>, ComponentPro
 
     override fun component(): LunchComponent {
         return (application as MainApplication).lunchComponent
+    }
+
+    override fun onSupportNavigateUp(): Boolean {
+        return findNavController(R.navigation.signup_graph).navigateUp()
     }
 }
 
