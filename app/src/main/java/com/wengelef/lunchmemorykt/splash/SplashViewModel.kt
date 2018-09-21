@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt
+package com.wengelef.lunchmemorykt.splash
 
-import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModel
+import com.wengelef.lunchmemorykt.domain.AuthInteractor
+import javax.inject.Inject
 
-open class BaseFragment : Fragment() {
+class SplashViewModel @Inject constructor(private val authInteractor: AuthInteractor) : ViewModel() {
 
-    fun <T> getComponent(): T {
-        return (activity as ComponentProvider<T>).component()
-    }
+
 }

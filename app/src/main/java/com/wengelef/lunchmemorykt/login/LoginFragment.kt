@@ -14,30 +14,28 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt.memories
+package com.wengelef.lunchmemorykt.login
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.wengelef.lunchmemorykt.BaseFragment
-import com.wengelef.lunchmemorykt.di.LunchComponent
-import com.wengelef.lunchmemorykt.ext.observe
-import com.wengelef.lunchmemorykt.ext.withViewModel
 import com.wengelef.lunchmemorykt.R
-import kotlinx.android.synthetic.main.fr_memories.*
+import com.wengelef.lunchmemorykt.di.LunchComponent
+import com.wengelef.lunchmemorykt.domain.AuthInteractor
+import com.wengelef.lunchmemorykt.ext.withViewModel
 import javax.inject.Inject
 
-class MemoriesFragment : BaseFragment() {
+class LoginFragment : BaseFragment() {
 
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fr_memories, container, false)
+        return inflater.inflate(R.layout.fr_login, container, false)
     }
 
     override fun onAttach(context: Context?) {
@@ -48,16 +46,10 @@ class MemoriesFragment : BaseFragment() {
     override fun onStart() {
         super.onStart()
 
-        withViewModel<MemoriesViewModel>(viewModelFactory) {
-            observe(isAuthenticated) { isAuthenticated ->
-                when (isAuthenticated) {
-                    null, false -> findNavController().navigate(R.id.action_memoriesfragment_to_signupfragment)
-                }
-            }
+        withViewModel<LoginViewModel>(viewModelFactory) {
 
-            authenticate()
-
-            logout_button.setOnClickListener { logout() }
         }
     }
 }
+
+class LoginViewModel @Inject constructor(private val authInteractor: AuthInteractor): ViewModel()

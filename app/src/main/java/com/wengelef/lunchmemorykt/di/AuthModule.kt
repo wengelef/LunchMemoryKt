@@ -14,13 +14,19 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt
+package com.wengelef.lunchmemorykt.di
 
-import androidx.fragment.app.Fragment
+import com.wengelef.lunchmemorykt.data.AuthService
+import com.wengelef.lunchmemorykt.domain.AuthInteractor
+import com.wengelef.lunchmemorykt.domain.AuthInteractorImpl
+import dagger.Module
+import dagger.Provides
 
-open class BaseFragment : Fragment() {
+@Module
+class AuthModule {
 
-    fun <T> getComponent(): T {
-        return (activity as ComponentProvider<T>).component()
+    @Provides
+    fun provideAuthInteractor(authService: AuthService): AuthInteractor {
+        return AuthInteractorImpl(authService)
     }
 }

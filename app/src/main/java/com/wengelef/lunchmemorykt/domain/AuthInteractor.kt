@@ -14,13 +14,21 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt
+package com.wengelef.lunchmemorykt.domain
 
-import androidx.fragment.app.Fragment
+import com.wengelef.lunchmemorykt.data.AuthService
 
-open class BaseFragment : Fragment() {
+interface AuthInteractor {
+    fun isAuthenticated(): Boolean
+    fun logout()
+}
 
-    fun <T> getComponent(): T {
-        return (activity as ComponentProvider<T>).component()
+class AuthInteractorImpl(private val authService: AuthService) : AuthInteractor {
+    override fun isAuthenticated(): Boolean {
+        return authService.getCurrentUser() != null
+    }
+
+    override fun logout() {
+        authService.logout()
     }
 }

@@ -3,33 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/signup_graph.xml"
-    app:startDestination="@id/splashfragment">
+    app:startDestination="@id/memoriesfragment">
 
     <fragment
-        android:name="com.wengelef.lunchmemorykt.splash.SplashFragment"
-        android:id="@+id/splashfragment"
-        tools:layout="@layout/fr_splash" >
+        android:id="@+id/signupfragment"
+        android:name="com.wengelef.lunchmemorykt.login.LoginFragment"
+        />
+
+    <fragment
+        android:id="@+id/memoriesfragment"
+        android:name="com.wengelef.lunchmemorykt.memories.MemoriesFragment">
+
         <action
-            android:id="@+id/action_splashfragment_to_signup"
+            android:id="@+id/action_memoriesfragment_to_signupfragment"
             app:destination="@id/signupfragment"
             app:enterAnim="@android:anim/fade_in"
             app:exitAnim="@android:anim/fade_out"
             app:popEnterAnim="@android:anim/fade_in"
             app:popExitAnim="@android:anim/fade_out" />
-        <action
-            android:id="@+id/action_splashfragment_to_memories"
-            app:destination="@id/memoriesfragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out" />
     </fragment>
-
-    <fragment
-        android:id="@+id/signupfragment"
-        android:name="com.wengelef.lunchmemorykt.splash.SplashFragment"
-        />
-    <fragment
-        android:id="@+id/memoriesfragment"
-        android:name="com.wengelef.lunchmemorykt.memories.MemoriesFragment"/>
 </navigation>

@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt
+package com.wengelef.lunchmemorykt.data
 
-import androidx.multidex.MultiDexApplication
-import com.google.firebase.FirebaseApp
 import com.google.firebase.auth.FirebaseAuth
-import com.wengelef.lunchmemorykt.di.DaggerLunchComponent
-import com.wengelef.lunchmemorykt.di.FirebaseModule
-import com.wengelef.lunchmemorykt.di.LunchComponent
+import javax.inject.Inject
 
-class MainApplication : MultiDexApplication() {
+interface AuthService {
+    fun getCurrentUser(): User?
+    fun logout()
+}
 
-    lateinit var lunchComponent: LunchComponent
+class AuthServiceImpl @Inject constructor(private val auth: FirebaseAuth): AuthService {
 
-    override fun onCreate() {
-        super.onCreate()
-        FirebaseApp.initializeApp(this)
+    override fun getCurrentUser(): User? {
+        return auth.currentUser?.let { user -> User(user.email!!) }
+    }
 
-        lunchComponent = DaggerLunchComponent.builder()
-                .firebaseModule(FirebaseModule(FirebaseAuth.getInstance()))
-                .build()
+    override fun logout() {
+        auth.signOut()
     }
 }
+
+data class User(val mail: String)

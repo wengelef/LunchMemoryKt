@@ -14,13 +14,24 @@
  * limitations under the License.
  */
 
-package com.wengelef.lunchmemorykt
+package com.wengelef.lunchmemorykt.di
 
-import androidx.fragment.app.Fragment
+import com.wengelef.lunchmemorykt.MainApplication
+import com.wengelef.lunchmemorykt.login.LoginFragment
+import com.wengelef.lunchmemorykt.memories.MemoriesFragment
+import dagger.Component
+import javax.inject.Singleton
 
-open class BaseFragment : Fragment() {
-
-    fun <T> getComponent(): T {
-        return (activity as ComponentProvider<T>).component()
-    }
+@Singleton
+@Component(modules = [
+    LunchModule::class,
+    ViewModelModule::class,
+    AuthModule::class,
+    RestModule::class,
+    FirebaseModule::class
+])
+interface LunchComponent {
+    fun inject(application: MainApplication)
+    fun inject(memoriesFragment: MemoriesFragment)
+    fun inject(loginFragment: LoginFragment)
 }
